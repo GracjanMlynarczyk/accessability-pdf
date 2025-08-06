@@ -1,2 +1,3 @@
-generated_pdfs
-.idea
+.env
+/src/generated_pdfs
+/.idea

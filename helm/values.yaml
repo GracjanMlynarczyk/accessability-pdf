@@ -1,0 +1,15 @@
+image:
+  repository: registry.com/app/accessible-pdf
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  domain: accessibility-pdf.com
+  clusterIssuer: letsencrypt-production
+
+resources: {}

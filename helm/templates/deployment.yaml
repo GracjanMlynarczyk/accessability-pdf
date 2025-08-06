@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "accessible-pdf.fullname" . }}
+  labels:
+    app: {{ include "accessible-pdf.name" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "accessible-pdf.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "accessible-pdf.name" . }}
+    spec:
+      containers:
+        - name: accessible-pdf
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8000
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          volumeMounts:
+            - name: pdf-output
+              mountPath: /app/generated_pdfs
+      volumes:
+        - name: pdf-output
+          emptyDir: {}

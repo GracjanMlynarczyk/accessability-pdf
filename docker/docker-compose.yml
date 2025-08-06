@@ -1,0 +1,9 @@
+services:
+  pdf-generator:
+    build:
+      context: ./../.
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./../src:/src
