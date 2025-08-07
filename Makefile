@@ -4,6 +4,8 @@ DOCKERFILE=./docker/Dockerfile
 
 IMAGE_TAG ?= latest
 REGISTRY_URL ?= registry.com/app
+DOMAIN ?= registry.com/app
+
 FULL_IMAGE=$(REGISTRY_URL)/$(APP_NAME):$(IMAGE_TAG)
 
 rebuild:
@@ -35,6 +37,7 @@ helm-deploy:
 	helm upgrade --install accessible-pdf ./helm --namespace $(APP_NAME) --create-namespace \
 		--set image.repository=$(REGISTRY_URL)/$(APP_NAME) \
 		--set image.tag=$(IMAGE_TAG)
+		--set ingress.domain=$(DOMAIN)
 
 helm-delete:
 	helm uninstall accessible-pdf
